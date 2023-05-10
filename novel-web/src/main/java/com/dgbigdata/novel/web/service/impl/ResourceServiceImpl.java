@@ -2,7 +2,7 @@ package com.dgbigdata.novel.web.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import com.dgbigdata.novel.web.domain.dto.resp.ImgVerifyCodeRespDto;
-import com.dgbigdata.novel.web.manager.VerifyCodeManager;
+import com.dgbigdata.novel.web.manager.redis.VerifyCodeManager;
 import com.dgbigdata.novel.web.service.ResourceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

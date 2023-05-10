@@ -1,5 +1,6 @@
 package com.dgbigdata.novel.web.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -9,10 +10,13 @@ import com.dgbigdata.novel.web.constant.SystemConfigConsts;
 import com.dgbigdata.novel.web.domain.BusinessError;
 import com.dgbigdata.novel.web.domain.dto.UserInfo;
 import com.dgbigdata.novel.web.domain.dto.req.UserCreateDto;
+import com.dgbigdata.novel.web.domain.dto.req.UserInfoDto;
 import com.dgbigdata.novel.web.domain.dto.req.UserLoginDto;
+import com.dgbigdata.novel.web.domain.dto.req.UserUpdateDto;
+import com.dgbigdata.novel.web.domain.dto.resp.UserInfoRespDto;
 import com.dgbigdata.novel.web.domain.dto.resp.UserLoginRespDto;
 import com.dgbigdata.novel.web.domain.dto.resp.UserRegisterDto;
-import com.dgbigdata.novel.web.manager.VerifyCodeManager;
+import com.dgbigdata.novel.web.manager.redis.VerifyCodeManager;
 import com.dgbigdata.novel.web.mapper.UserInfoMapper;
 import com.dgbigdata.novel.web.service.UserInfoService;
 import com.dgbigdata.novel.web.util.JwtUtils;
@@ -98,6 +102,22 @@ public class UserInfoServiceImpl extends MyBatisPlusService<UserInfoMapper, User
                 .nickName(userInfo.getNickName())
                 .token(jwtUtils.generateToken(userInfo.getId(), SystemConfigConsts.NOVEL_FRONT_KEY))
                 .build();
+    }
+
+    @Override
+    public UserInfoRespDto queryOne(UserInfoDto dto) {
+        UserInfo userInfo = getById(dto.getUserId());
+        return UserInfoRespDto.builder()
+                .nickName(userInfo.getNickName())
+                .userPhoto(userInfo.getUserPhoto())
+                .userSex(userInfo.getUserSex())
+                .build();
+    }
+
+    @Override
+    public void update(UserUpdateDto dto) {
+        UserInfo userInfo = BeanUtil.copyProperties(dto, UserInfo.class);
+        updateById(userInfo);
     }
 }
 

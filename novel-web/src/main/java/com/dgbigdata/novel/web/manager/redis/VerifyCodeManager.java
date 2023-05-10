@@ -1,4 +1,4 @@
-package com.dgbigdata.novel.web.manager;
+package com.dgbigdata.novel.web.manager.redis;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
