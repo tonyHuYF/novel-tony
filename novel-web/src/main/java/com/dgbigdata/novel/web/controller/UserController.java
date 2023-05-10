@@ -1,8 +1,13 @@
 package com.dgbigdata.novel.web.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.dgbigdata.common.api.domain.ResultBean;
 import com.dgbigdata.novel.web.constant.ApiRouterConsts;
+import com.dgbigdata.novel.web.domain.dto.resp.UserLoginRespDto;
+import com.dgbigdata.novel.web.domain.dto.resp.UserRegisterDto;
 import com.dgbigdata.novel.web.domain.param.UserCreateParam;
+import com.dgbigdata.novel.web.domain.param.UserLoginParam;
+import com.dgbigdata.novel.web.domain.vo.UserLoginVo;
 import com.dgbigdata.novel.web.domain.vo.UserRegisterVo;
 import com.dgbigdata.novel.web.service.UserInfoService;
 import io.swagger.annotations.Api;
@@ -28,8 +33,18 @@ public class UserController {
     @ApiOperation(value = "用户注册")
     @PostMapping("/register")
     public ResultBean<UserRegisterVo> register(@Validated @RequestBody UserCreateParam param) {
-        UserRegisterVo vo = userInfoService.register(param.getUserCreateDto());
-        return ResultBean.ok(vo);
+        UserRegisterDto dto = userInfoService.register(param.getUserCreateDto());
+        return ResultBean.ok(new UserRegisterVo(dto.getUserId(),dto.getToken()));
+    }
+
+    /**
+     * 用户登录接口
+     */
+    @ApiOperation(value = "用户登录")
+    @PostMapping("/login")
+    public ResultBean<UserLoginVo> login (@Validated@RequestBody UserLoginParam param){
+        UserLoginRespDto dto = userInfoService.login(param.getUserLoginDto());
+        return ResultBean.ok(BeanUtil.copyProperties(dto,UserLoginVo.class));
     }
 
 

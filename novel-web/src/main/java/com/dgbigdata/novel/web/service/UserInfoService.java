@@ -1,9 +1,11 @@
 package com.dgbigdata.novel.web.service;
 
-import com.dgbigdata.novel.web.domain.dto.UserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.dgbigdata.novel.web.domain.dto.UserInfo;
 import com.dgbigdata.novel.web.domain.dto.req.UserCreateDto;
-import com.dgbigdata.novel.web.domain.vo.UserRegisterVo;
+import com.dgbigdata.novel.web.domain.dto.req.UserLoginDto;
+import com.dgbigdata.novel.web.domain.dto.resp.UserLoginRespDto;
+import com.dgbigdata.novel.web.domain.dto.resp.UserRegisterDto;
 
 /**
 * @author TonyHu
@@ -12,6 +14,8 @@ import com.dgbigdata.novel.web.domain.vo.UserRegisterVo;
 */
 public interface UserInfoService extends IService<UserInfo> {
 
-    UserRegisterVo register(UserCreateDto userCreateDto);
+    UserRegisterDto register(UserCreateDto userCreateDto);
+
+    UserLoginRespDto login(UserLoginDto param);
 
 }

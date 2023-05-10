@@ -1,6 +1,6 @@
 package com.dgbigdata.novel.web.service;
 
-import com.dgbigdata.novel.web.domain.vo.ImgVerifyCodeVo;
+import com.dgbigdata.novel.web.domain.dto.resp.ImgVerifyCodeRespDto;
 
 import java.io.IOException;
 
@@ -14,5 +14,5 @@ public interface ResourceService {
      * 获取图片验证码
      *
      */
-    ImgVerifyCodeVo getImgVerifyCode() throws IOException;
+    ImgVerifyCodeRespDto getImgVerifyCode() throws IOException;
 }
