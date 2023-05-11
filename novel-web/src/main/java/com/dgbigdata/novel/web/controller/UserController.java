@@ -63,7 +63,7 @@ public class UserController {
     @ApiOperation("用户信息修改")
     @PostMapping("/update")
     public ResultBean<Void> update(@Validated @RequestBody UserUpdateParam param) {
-        param.setUserId(UserHolder.getUserId());
+        param.setId(UserHolder.getUserId());
         userInfoService.update(param.getUserUpdateDto());
         return ResultBean.ok();
     }

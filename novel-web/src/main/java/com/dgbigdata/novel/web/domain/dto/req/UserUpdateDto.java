@@ -12,7 +12,7 @@ public class UserUpdateDto {
     /**
      * 用户ID
      */
-    private String userId;
+    private String id;
 
     /**
      * 昵称

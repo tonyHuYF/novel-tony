@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
  * 用户修改参数
@@ -23,26 +22,23 @@ public class UserUpdateParam {
      */
     @NotBlank
     @ApiModelProperty(value = "用户ID", required = true)
-    private String userId;
+    private String id;
 
     /**
      * 昵称
      */
-    @NotBlank
     @ApiModelProperty(value = "昵称")
     private String nickName;
 
     /**
      * 头像地址
      */
-    @NotBlank
     @ApiModelProperty(value = "头像地址")
     private String userPhoto;
 
     /**
      * 性别
      */
-    @NotNull
     @ApiModelProperty(value = "性别")
     private Integer userSex;
 
