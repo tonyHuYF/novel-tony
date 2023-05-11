@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 
-@Api(tags = "前台门户-资源(图片/视频/文档)模块")
+@Api(tags = "前台门户-资源(图片、视频、文档)模块")
 @RestController
 @RequestMapping(ApiRouterConsts.API_FRONT_RESOURCE_URL_PREFIX)
 @RequiredArgsConstructor
 public class ResourceController {
+
     private final ResourceService resourceService;
 
     /**

@@ -2,10 +2,7 @@ package com.dgbigdata.novel.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dgbigdata.novel.web.domain.dto.UserInfo;
-import com.dgbigdata.novel.web.domain.dto.req.UserCreateDto;
-import com.dgbigdata.novel.web.domain.dto.req.UserInfoDto;
-import com.dgbigdata.novel.web.domain.dto.req.UserLoginDto;
-import com.dgbigdata.novel.web.domain.dto.req.UserUpdateDto;
+import com.dgbigdata.novel.web.domain.dto.req.*;
 import com.dgbigdata.novel.web.domain.dto.resp.UserInfoRespDto;
 import com.dgbigdata.novel.web.domain.dto.resp.UserLoginRespDto;
 import com.dgbigdata.novel.web.domain.dto.resp.UserRegisterDto;
@@ -24,5 +21,9 @@ public interface UserInfoService extends IService<UserInfo> {
     UserInfoRespDto queryOne(UserInfoDto dto);
 
     void update(UserUpdateDto dto);
+
+    void submitFeedback(UserFeedbackCreateDto dto);
+
+    void deleteFeedback(UserFeedbackDeleteDto dto);
 
 }

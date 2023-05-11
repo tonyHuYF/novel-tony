@@ -12,5 +12,9 @@ public class BusinessError {
     public static final Error USER_PASSWORD_ERROR = new Error(60004, "用户密码错误");
     public static final Error USER_LOGIN_EXPIRED = new Error(60005, "用户登录已过期");
     public static final Error USER_UN_AUTH = new Error(60006, "访问未授权");
+    public static final Error USER_COMMENTED = new Error(60007, "用户已发表评论");
+    public static final Error SERVICE_ERROR = new Error(60008, "服务器内部错误");
+
+
 
 }

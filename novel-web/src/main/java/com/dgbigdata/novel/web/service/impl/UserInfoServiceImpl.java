@@ -8,16 +8,15 @@ import com.dgbigdata.common.api.domain.CommonException;
 import com.dgbigdata.common.core.service.MyBatisPlusService;
 import com.dgbigdata.novel.web.constant.SystemConfigConsts;
 import com.dgbigdata.novel.web.domain.BusinessError;
+import com.dgbigdata.novel.web.domain.dto.UserFeedback;
 import com.dgbigdata.novel.web.domain.dto.UserInfo;
-import com.dgbigdata.novel.web.domain.dto.req.UserCreateDto;
-import com.dgbigdata.novel.web.domain.dto.req.UserInfoDto;
-import com.dgbigdata.novel.web.domain.dto.req.UserLoginDto;
-import com.dgbigdata.novel.web.domain.dto.req.UserUpdateDto;
+import com.dgbigdata.novel.web.domain.dto.req.*;
 import com.dgbigdata.novel.web.domain.dto.resp.UserInfoRespDto;
 import com.dgbigdata.novel.web.domain.dto.resp.UserLoginRespDto;
 import com.dgbigdata.novel.web.domain.dto.resp.UserRegisterDto;
 import com.dgbigdata.novel.web.manager.redis.VerifyCodeManager;
 import com.dgbigdata.novel.web.mapper.UserInfoMapper;
+import com.dgbigdata.novel.web.service.UserFeedbackService;
 import com.dgbigdata.novel.web.service.UserInfoService;
 import com.dgbigdata.novel.web.util.JwtUtils;
 import lombok.RequiredArgsConstructor;
@@ -38,9 +37,9 @@ public class UserInfoServiceImpl extends MyBatisPlusService<UserInfoMapper, User
 
     private final VerifyCodeManager verifyCodeManager;
 
-    private final UserInfoMapper userInfoMapper;
-
     private final JwtUtils jwtUtils;
+
+    private final UserFeedbackService userFeedbackService;
 
 
     @Override
@@ -54,7 +53,7 @@ public class UserInfoServiceImpl extends MyBatisPlusService<UserInfoMapper, User
         //验证手机号是否已注册
         LambdaQueryWrapper<UserInfo> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(UserInfo::getUsername, dto.getUsername());
-        Long count = userInfoMapper.selectCount(wrapper);
+        Long count = count(wrapper);
         if (count > 0) {
             throw new CommonException(BusinessError.USER_NAME_EXIST);
         }
@@ -119,6 +118,23 @@ public class UserInfoServiceImpl extends MyBatisPlusService<UserInfoMapper, User
         UserInfo userInfo = BeanUtil.copyProperties(dto, UserInfo.class);
         updateById(userInfo);
     }
+
+
+    @Override
+    public void submitFeedback(UserFeedbackCreateDto dto) {
+        UserFeedback userFeedback = BeanUtil.copyProperties(dto, UserFeedback.class);
+        userFeedback.setId(IdUtil.fastSimpleUUID());
+        userFeedbackService.save(userFeedback);
+    }
+
+    @Override
+    public void deleteFeedback(UserFeedbackDeleteDto dto) {
+        LambdaQueryWrapper<UserFeedback> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UserFeedback::getId, dto.getId());
+        wrapper.eq(UserFeedback::getUserId, dto.getUserId());
+        userFeedbackService.remove(wrapper);
+    }
+
 }
 
 

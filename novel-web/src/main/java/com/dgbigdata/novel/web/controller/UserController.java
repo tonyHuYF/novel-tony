@@ -8,12 +8,11 @@ import com.dgbigdata.novel.web.domain.dto.req.UserInfoDto;
 import com.dgbigdata.novel.web.domain.dto.resp.UserInfoRespDto;
 import com.dgbigdata.novel.web.domain.dto.resp.UserLoginRespDto;
 import com.dgbigdata.novel.web.domain.dto.resp.UserRegisterDto;
-import com.dgbigdata.novel.web.domain.param.UserCreateParam;
-import com.dgbigdata.novel.web.domain.param.UserLoginParam;
-import com.dgbigdata.novel.web.domain.param.UserUpdateParam;
+import com.dgbigdata.novel.web.domain.param.*;
 import com.dgbigdata.novel.web.domain.vo.UserInfoVo;
 import com.dgbigdata.novel.web.domain.vo.UserLoginVo;
 import com.dgbigdata.novel.web.domain.vo.UserRegisterVo;
+import com.dgbigdata.novel.web.service.BookService;
 import com.dgbigdata.novel.web.service.UserInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,6 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserInfoService userInfoService;
+
+    private final BookService bookService;
 
     /**
      * 用户注册接口
@@ -65,6 +66,47 @@ public class UserController {
     public ResultBean<Void> update(@Validated @RequestBody UserUpdateParam param) {
         param.setId(UserHolder.getUserId());
         userInfoService.update(param.getUserUpdateDto());
+        return ResultBean.ok();
+    }
+
+    @ApiOperation("用户反馈提交接口")
+    @PostMapping("/feedback")
+    public ResultBean<Void> submitFeedback(@Validated @RequestBody UserFeedbackCreateParam param) {
+        param.setUserId(UserHolder.getUserId());
+        userInfoService.submitFeedback(param.getUserFeedbackCreateDto());
+        return ResultBean.ok();
+    }
+
+    @ApiOperation("用户反馈删除接口")
+    @PostMapping("/feedback/delete")
+    public ResultBean<Void> deleteFeedback(@Validated @RequestBody UserFeedbackDeleteParam param) {
+        param.setUserId(UserHolder.getUserId());
+        userInfoService.deleteFeedback(param.getUserFeedbackDeleteDto());
+        return ResultBean.ok();
+    }
+
+    @ApiOperation("评论发表接口")
+    @PostMapping("/comment/create")
+    public ResultBean<Void> createComment(@Validated @RequestBody CommentCreateParam param) {
+        param.setUserId(UserHolder.getUserId());
+        bookService.createComment(param.getCommentCreateDto());
+        return ResultBean.ok();
+    }
+
+    @ApiOperation("评论修改接口")
+    @PostMapping("/comment/update")
+    public ResultBean<Void> updateComment(@Validated @RequestBody CommentUpdateParam param) {
+        param.setUserId(UserHolder.getUserId());
+        bookService.updateComment(param.getCommentUpdateDto());
+        return ResultBean.ok();
+    }
+
+
+    @ApiOperation("评论删除接口")
+    @PostMapping("/comment/delete")
+    public ResultBean<Void> deleteComment(@Validated @RequestBody CommentDeleteParam param) {
+        param.setUserId(UserHolder.getUserId());
+        bookService.deleteComment(param.getCommentDeleteDto());
         return ResultBean.ok();
     }
 
